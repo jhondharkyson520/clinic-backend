@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  postgres_app1:
+    image: postgres
+    container_name: postgres_app1
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data_app1:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+    networks:
+      - network_app1
+    restart: unless-stopped
+
+  pgadmin_app1:
+    image: dpage/pgadmin4
+    container_name: pgadmin_app1
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    ports:
+      - "15433:80"
+    networks:
+      - network_app1
+    restart: unless-stopped
+
+  node_app1:
+    build: .
+    container_name: node_app1
+    volumes:
+      - .:/usr/app
+    ports:
+      - "3333:3333"
+    networks:
+      - network_app1
+    restart: unless-stopped
+
+networks:
+  network_app1:
+
+volumes:
+  postgres_data_app1:
