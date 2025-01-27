@@ -32,8 +32,6 @@ model Clients {
   cpf String
   telefone String
   endereco String
-  tipoPlano String
-  planoFamiliar String?
   dataVencimento DateTime?
   valorPlano Decimal
   quantidadeSessoes Int?

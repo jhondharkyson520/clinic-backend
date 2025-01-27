@@ -9,8 +9,6 @@ class ListClientService {
                 email: true,
                 telefone: true,
                 dataVencimento: true,
-                tipoPlano: true,
-                planoFamiliar: true,
                 valorPlano: true,
                 quantidadeSessoes: true,
                 situacao: true,

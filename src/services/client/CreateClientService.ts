@@ -8,8 +8,6 @@ interface ClientRequest {
   cpf: string;
   telefone: string;
   endereco: string;
-  tipoPlano: string;
-  planoFamiliar?: string | null;
   dataVencimento?: string | null;
   valorPlano: number;
   quantidadeSessoes?: number | null;
@@ -23,8 +21,6 @@ class CreateClientService {
     cpf,
     telefone,
     endereco,
-    tipoPlano,
-    planoFamiliar,
     dataVencimento,
     valorPlano,
     quantidadeSessoes,
@@ -38,7 +34,6 @@ class CreateClientService {
       cpf === "" ||
       telefone === "" ||
       endereco === "" ||
-      tipoPlano === "" ||
       valorPlano === null ||
       situacao === undefined
     ) {
@@ -48,13 +43,7 @@ class CreateClientService {
     const formattedDataVencimento = dataVencimento
       ? parse(dataVencimento, 'dd/MM/yyyy', new Date())
       : null;
-    const situacaoDependente = true;
-
-      if(planoFamiliar === 'Dependente'){
-        
-        situacao === situacaoDependente;
-  
-      } 
+    
 
 
     const client = await prismaClient.clients.create({
@@ -64,9 +53,7 @@ class CreateClientService {
         cpf: cpf,
         telefone: telefone,
         endereco: endereco,
-        tipoPlano: tipoPlano,
         valorPlano: valorPlano,
-        planoFamiliar: planoFamiliar || null,
         dataVencimento: formattedDataVencimento || null,
         quantidadeSessoes: quantidadeSessoes || null,
         situacao: situacao,

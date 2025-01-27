@@ -17,8 +17,6 @@ class DetailClientService {
                 cpf: true,
                 telefone: true,
                 endereco: true,
-                tipoPlano: true,
-                planoFamiliar: true,
                 dataVencimento: true,
                 valorPlano: true,
                 quantidadeSessoes: true,

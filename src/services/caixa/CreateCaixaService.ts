@@ -72,18 +72,6 @@ class CreateCaixaService {
       })
 
     } 
-
-    if(client.planoFamiliar === 'Dependente'){
-
-     
-      await prismaClient.clients.update({
-        where: { id: client.id },
-        data: {
-          situacao: true
-        }
-      })
-
-    } 
        
     return caixa;
   }

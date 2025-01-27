@@ -8,8 +8,6 @@ interface UpdateClientRequest {
   cpf: string;
   telefone: string;
   endereco: string;
-  tipoPlano: string;
-  planoFamiliar: string | null;
   dataVencimento: string | null;
   valorPlano: number;
   quantidadeSessoes: number | null;
@@ -24,8 +22,6 @@ class UpdateClientService {
     cpf,
     telefone,
     endereco,
-    tipoPlano,
-    planoFamiliar,
     dataVencimento,
     valorPlano,
     quantidadeSessoes,
@@ -47,8 +43,6 @@ class UpdateClientService {
         cpf,
         telefone,
         endereco,
-        tipoPlano,
-        planoFamiliar,
         dataVencimento: parsedDataVencimento,
         valorPlano,
         quantidadeSessoes: quantidadeSessoes !== null ? quantidadeSessoes : undefined,
