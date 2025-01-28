@@ -35,6 +35,7 @@ class UpdateClientService {
       ? parse(dataVencimento, 'dd/MM/yyyy', new Date())
       : null;
 
+    try {
     const client = await prismaClient.clients.update({
       where: { id },
       data: {
@@ -51,7 +52,11 @@ class UpdateClientService {
     });
 
     return client;
+    } catch(error) {
+      throw new Error(`Erro ao atualizar cliente: ${error.message}`);
+    }
   }
+
 }
 
 export { UpdateClientService };
