@@ -1,5 +1,5 @@
 import prismaClient from "../../prisma";
-import { hash } from "bcryptjs";
+import {hash} from "bcryptjs";
 
 interface UpdateUserPasswordRequest {
     userId: string;
@@ -8,8 +8,7 @@ interface UpdateUserPasswordRequest {
 
 class UpdateUserPasswordService {
     async execute({ userId, newPassword }: UpdateUserPasswordRequest) {
-        const passwordHash = await hash(newPassword, 8); // Hash da nova senha
-
+        const passwordHash = await hash(newPassword, 8);
         await prismaClient.user.update({
             where: {
                 id: userId
@@ -21,4 +20,4 @@ class UpdateUserPasswordService {
     }
 }
 
-export { UpdateUserPasswordService };
+export {UpdateUserPasswordService};

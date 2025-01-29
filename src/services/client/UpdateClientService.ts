@@ -1,5 +1,5 @@
 import prismaClient from '../../prisma';
-import { parse } from 'date-fns';
+import {parse} from 'date-fns';
 
 interface UpdateClientRequest {
   id: string;
@@ -36,27 +36,25 @@ class UpdateClientService {
       : null;
 
     try {
-    const client = await prismaClient.clients.update({
-      where: { id },
-      data: {
-        name,
-        email,
-        cpf,
-        telefone,
-        endereco,
-        dataVencimento: parsedDataVencimento,
-        valorPlano,
-        quantidadeSessoes: quantidadeSessoes !== null ? quantidadeSessoes : undefined,
-        situacao,
-      },
-    });
-
-    return client;
+      const client = await prismaClient.clients.update({
+        where: {id},
+        data: {
+          name,
+          email,
+          cpf,
+          telefone,
+          endereco,
+          dataVencimento: parsedDataVencimento,
+          valorPlano,
+          quantidadeSessoes: quantidadeSessoes !== null ? quantidadeSessoes : undefined,
+          situacao,
+        },
+      });
+      return client;
     } catch(error) {
       throw new Error(`Erro ao atualizar cliente: ${error.message}`);
     }
   }
-
 }
 
-export { UpdateClientService };
+export {UpdateClientService};

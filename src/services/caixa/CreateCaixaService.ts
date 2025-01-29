@@ -1,4 +1,4 @@
-import { Decimal } from '@prisma/client/runtime/library';
+import {Decimal} from '@prisma/client/runtime/library';
 import prismaClient from '../../prisma';
 
 interface CaixaRequest {
@@ -7,7 +7,7 @@ interface CaixaRequest {
 }
 
 class CreateCaixaService {
-  async execute({ client_id, valorPago }: CaixaRequest) {
+  async execute({client_id, valorPago}: CaixaRequest) {
     if (client_id === "" || valorPago === "") {
       throw new Error("Preencha todos os campos!");
     }
@@ -25,13 +25,8 @@ class CreateCaixaService {
       orderBy: { dataOperacao: 'desc' },
     });
 
-    const valorPlano = client.valorPlano.toString();
-
-    
-
-    const valorAberto = Decimal.add(lastCaixa.valorAberto, valorPago).toString();
-
-   
+    const valorPlano = client.valorPlano.toString();   
+    const valorAberto = Decimal.add(lastCaixa.valorAberto, valorPago).toString();   
     const situacao = undefined;
 
     if(parseFloat(valorAberto) >= 0){
@@ -57,12 +52,7 @@ class CreateCaixaService {
       },
     });
 
- 
-
-           
-    if(client.sessoesContador >= client.quantidadeSessoes){
-
-     
+    if(client.sessoesContador >= client.quantidadeSessoes) {     
       await prismaClient.clients.update({
         where: { id: client.id },
         data: {
@@ -70,11 +60,10 @@ class CreateCaixaService {
           situacao: true
         }
       })
-
     } 
        
     return caixa;
   }
 }
 
-export { CreateCaixaService };
+export {CreateCaixaService};

@@ -1,22 +1,21 @@
 import prismaClient from "../../prisma";
-import { compare } from "bcryptjs";
-import { sign } from "jsonwebtoken";
+import {compare} from "bcryptjs";
+import {sign} from "jsonwebtoken";
 
-interface AuthRequest{
+interface AuthRequest {
     email: string;
     password: string;
 }
 
-class AuthUserService{
-    async execute({ email, password }: AuthRequest){
-        
+class AuthUserService {
+    async execute({email, password}: AuthRequest) {        
         const user = await prismaClient.user.findFirst({
             where: {
                 email: email
             }
-        })
+        });
 
-        if(!user){
+        if(!user) {
             throw new Error('User/password incorrect');
         }
 
@@ -36,8 +35,7 @@ class AuthUserService{
                 subject: user.id,
                 expiresIn: '30d'
             }
-        )
-        
+        );       
         
         return {
             id: user.id,
@@ -48,4 +46,4 @@ class AuthUserService{
     }
 }
 
-export { AuthUserService }
+export {AuthUserService};

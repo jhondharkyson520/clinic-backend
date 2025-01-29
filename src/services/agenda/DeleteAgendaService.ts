@@ -16,13 +16,10 @@ class DeleteAgendaService {
     
     const agenda = await prismaClient.agenda.delete({
       where: { id: agendaId },
-    });
-
-    console.log("Agendamento deletado com sucesso");
-    
+    });   
 
     return agenda;
   }
 }
 
-export { DeleteAgendaService };
+export {DeleteAgendaService};

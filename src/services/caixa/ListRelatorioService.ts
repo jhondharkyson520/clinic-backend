@@ -1,11 +1,8 @@
 import prismaClient from "../../prisma";
 
+class ListRelatorioService {
 
-
-class ListRelatorioService{
-
-    async execute(){
-
+    async execute() {
         const caixa = await prismaClient.caixa.findMany({
             select: {
               id: true,
@@ -25,9 +22,7 @@ class ListRelatorioService{
             }
           });
         return caixa;
-
     }
-
 }
 
-export { ListRelatorioService }
+export {ListRelatorioService};

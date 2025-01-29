@@ -1,6 +1,5 @@
-import { DateTime } from 'luxon';
+import {DateTime} from 'luxon';
 import prismaClient from '../../prisma';
-
 
 interface AgendaRequest {
   dataConsulta: string;
@@ -9,34 +8,23 @@ interface AgendaRequest {
 }
 
 class CreateAgendaService {
-  async execute({ dataConsulta, horarioConsulta, client_id }: AgendaRequest) {
+  async execute({dataConsulta, horarioConsulta, client_id}: AgendaRequest) {
     if (dataConsulta === '' || horarioConsulta === '' || client_id === '') {
       throw new Error('Preencha todos os campos!');
     }
 
-    try {
-      
+    try {      
       const dataHoraLuxon = DateTime.fromFormat(`${dataConsulta} ${horarioConsulta}`, 'dd/MM/yyyy HH:mm', { zone: 'UTC' });
-
       const horaAtual = DateTime.now();
 
-      console.log(dataHoraLuxon);
-      console.log(horaAtual);
-
       if (dataHoraLuxon.toMillis() <= horaAtual.startOf('day').toMillis()) {
-        console.log('Não é possível fazer agendamentos para datas passadas');
         return;
-    }
-    
-    if (dataHoraLuxon.toISO() <= horaAtual.toISO()) {
-        console.log('Não é possível fazer agendamentos para horários passados');
-        return;
-    }
-
-      console.log('Agendamento possível');
-
-
+      }
       
+      if (dataHoraLuxon.toISO() <= horaAtual.toISO()) {
+          return;
+      }
+
       const agendamentoExistente = await prismaClient.agenda.findFirst({
         where: {
           AND: [
@@ -59,9 +47,6 @@ class CreateAgendaService {
       }
 
       const novaSessaoContador = (client.sessoesContador || 0) + 1;
-
-      
-
       const agenda = await prismaClient.agenda.create({
         data: {
           dataConsulta: dataHoraLuxon.toISO(),
@@ -74,7 +59,6 @@ class CreateAgendaService {
           sessoesContador: novaSessaoContador,
         },
       });
-
      
       if (client.quantidadeSessoes !== null && novaSessaoContador === client.quantidadeSessoes) {
         await prismaClient.clients.update({
@@ -82,7 +66,6 @@ class CreateAgendaService {
           data: { situacao: false },
         });
       }
-
      
       await prismaClient.clients.update({
         where: { id: client_id },
@@ -96,4 +79,4 @@ class CreateAgendaService {
   }
 }
 
-export { CreateAgendaService };
+export {CreateAgendaService};

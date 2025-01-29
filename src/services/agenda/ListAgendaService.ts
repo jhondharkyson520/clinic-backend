@@ -34,7 +34,6 @@ class ListAgendaService {
       }
 
       const dataFormatada = new Date(agenda.dataConsulta).toLocaleDateString('pt-BR');
-
       const horaFormatada = new Date(agenda.horarioConsulta).toLocaleTimeString('pt-BR', {
         hour: '2-digit',
         minute: '2-digit',
@@ -56,4 +55,4 @@ class ListAgendaService {
   }
 }
 
-export { ListAgendaService, Agenda };
+export {ListAgendaService, Agenda};

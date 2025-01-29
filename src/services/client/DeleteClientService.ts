@@ -7,7 +7,7 @@ class DeleteClientService {
     }
 
     const existingClient = await prismaClient.clients.findUnique({
-      where: { id: clientId },
+      where: {id: clientId},
     });
 
     if (!existingClient) {
@@ -17,7 +17,6 @@ class DeleteClientService {
     await prismaClient.agenda.deleteMany({
       where: { client_id: clientId },
     });
-
     await prismaClient.caixa.deleteMany({
       where: { client_id: clientId },
     });
@@ -25,9 +24,8 @@ class DeleteClientService {
     const client = await prismaClient.clients.delete({
       where: { id: clientId },
     });
-
     return client;
   }
 }
 
-export { DeleteClientService };
+export {DeleteClientService};

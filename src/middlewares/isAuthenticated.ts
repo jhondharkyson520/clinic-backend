@@ -1,32 +1,21 @@
-import { NextFunction, Request, Response } from "express";
-import { verify } from "jsonwebtoken";
+import {NextFunction, Request, Response} from "express";
+import {verify} from "jsonwebtoken";
 
-interface PayLoad{
+interface PayLoad {
     sub: string;
-
 }
 
-export function isAuthenticated( req: Request, res: Response, next: NextFunction ){
-
+export function isAuthenticated(req: Request, res: Response, next: NextFunction) {
     const authToken = req.headers.authorization;
-
     if(!authToken){
         return res.status(401).end();
     }
-
     const [, token] = authToken.split(" ");
-
     try{
-
         const { sub } = verify( token, process.env.JWT_SECRET ) as PayLoad;
-
-        req.user_id = sub;
-        
+        req.user_id = sub;        
         return next();
-
-    }catch(err){
+    } catch(err) {
         return res.status(401).end();
     }
-    
-
 }

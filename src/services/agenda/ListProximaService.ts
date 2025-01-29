@@ -1,5 +1,5 @@
 import prismaClient from '../../prisma';
-import { DateTime } from 'luxon';
+import {DateTime} from 'luxon';
 
 interface AgendaItem {
   id: string;
@@ -53,38 +53,25 @@ class ListProximaService {
             client_id: agenda.client.id,
           };
         } catch (error) {
-          console.error('Error processing agenda item:', error.message);
           return null;
         }
       });
 
-      console.log('Agenda Items:', agendaItems);
-
       const filteredAgendaItems = agendaItems.filter((agenda) => {
         if (!agenda) {
           return false;
-        }
-      
+        }      
         
-        const dataConsultaFormatted = DateTime.fromFormat(agenda.dataConsulta, 'dd/MM/yyyy').toISODate();
-      
+        const dataConsultaFormatted = DateTime.fromFormat(agenda.dataConsulta, 'dd/MM/yyyy').toISODate();      
         return dataConsultaFormatted === dataAtual;
-
       }).sort((a, b) => {
-
-        return DateTime.fromFormat(a.horarioConsulta, 'HH:mm').toMillis() - DateTime.fromFormat(b.horarioConsulta, 'HH:mm').toMillis();
-      
+        return DateTime.fromFormat(a.horarioConsulta, 'HH:mm').toMillis() - DateTime.fromFormat(b.horarioConsulta, 'HH:mm').toMillis();      
       });
-      
-
-      console.log('Filtered Agenda Items:', filteredAgendaItems);
-
       return filteredAgendaItems;
     } catch (error) {
-      console.error('Error fetching agendas from Prisma:', error.message);
       return [];
     }
   }
 }
 
-export { ListProximaService };
+export {ListProximaService};

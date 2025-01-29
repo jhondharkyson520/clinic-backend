@@ -1,6 +1,5 @@
 import prismaClient from "../../prisma";
-import { DateTime } from "luxon"; 
-import { parse } from 'date-fns';
+import {parse} from 'date-fns';
 
 interface ClientRequest {
   name: string;
@@ -26,8 +25,6 @@ class CreateClientService {
     quantidadeSessoes,
     situacao,
   }: ClientRequest) {
-    console.log('dataVencimento (Backend - Início):', dataVencimento);
-
     if (
       name === "" ||
       email === "" ||
@@ -43,9 +40,6 @@ class CreateClientService {
     const formattedDataVencimento = dataVencimento
       ? parse(dataVencimento, 'dd/MM/yyyy', new Date())
       : null;
-    
-
-
     const client = await prismaClient.clients.create({
       data: {
         name: name,
@@ -67,11 +61,8 @@ class CreateClientService {
         situacao: true,
       },
     });
-
-    //console.log('dataVencimento:', formattedDataVencimento);
-
     return client;
   }
 }
 
-export { CreateClientService };
+export {CreateClientService};

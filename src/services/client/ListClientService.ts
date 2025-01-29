@@ -16,15 +16,11 @@ class ListClientService {
             }
         });
 
-        const caixa = await prismaClient.caixa.findMany();
-    
-
+        const caixa = await prismaClient.caixa.findMany();  
         const today = new Date(); 
         const dayOfMonth = today.getDate(); 
 
-        for (const client of clients) {
-
-           
+        for (const client of clients) {           
             const hasPayment = caixa.some(payment => payment.client_id === client.id);
             if (client.dataVencimento && !hasPayment) {
                 const vencimento = new Date(client.dataVencimento);
@@ -32,19 +28,16 @@ class ListClientService {
                 
                 if (dayOfMonth === vencimentoDoMes) {
                     await prismaClient.clients.update({
-                        where: { id: client.id },
-                        data: { situacao: false }
+                        where: {id: client.id},
+                        data: {situacao: false}
                     });
                 } else {
                     await prismaClient.clients.update({
-                        where: { id: client.id },
-                        data: { situacao: true }
+                        where: {id: client.id},
+                        data: {situacao: true}
                     });
                 }
-
-
                 const valorAberto = client.valorPlano;
-
                 await prismaClient.caixa.create({
                     data: {
                       dataOperacao: new Date(),
@@ -54,11 +47,7 @@ class ListClientService {
                       valorPago: 0
                     },
                   });
-
-                  
-                  
-
-            } else if(client.sessoesContador >= client.quantidadeSessoes){
+            } else if(client.sessoesContador >= client.quantidadeSessoes) {
                 const valorAberto = client.valorPlano;        
                 await prismaClient.caixa.create({
                     data: {
@@ -69,10 +58,6 @@ class ListClientService {
                       valorPago: 0
                     },
                   });
-                  
-               
-               
-                //console.log(`Cliente ${client.id} possui registro no caixa.`);
                 continue;
             }
         }
@@ -80,4 +65,4 @@ class ListClientService {
     }
 }
 
-export { ListClientService };
+export {ListClientService};

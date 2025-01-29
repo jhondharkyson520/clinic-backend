@@ -1,4 +1,3 @@
-// DetailClientService.ts
 import prismaClient from "../../prisma";
 
 interface DetailRequest {
@@ -6,7 +5,7 @@ interface DetailRequest {
 }
 
 class DetailClientService {
-    async execute({ id }: DetailRequest) {
+    async execute({id}: DetailRequest) {
         const client = await prismaClient.clients.findUnique({
             where: {
                 id: id
@@ -23,11 +22,8 @@ class DetailClientService {
                 situacao: true,
             }
         });
-
-        //console.log(id);
-
         return client;
     }
 }
 
-export { DetailClientService };
+export {DetailClientService};

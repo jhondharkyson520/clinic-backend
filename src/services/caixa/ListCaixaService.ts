@@ -1,5 +1,5 @@
 import prismaClient from '../../prisma';
-import { format } from 'date-fns';
+import {format} from 'date-fns';
 
 class ListCaixaService {
   async execute() {
@@ -32,4 +32,4 @@ class ListCaixaService {
   }
 }
 
-export { ListCaixaService };
+export {ListCaixaService};
