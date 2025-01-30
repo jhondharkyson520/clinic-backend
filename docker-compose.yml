@@ -1,44 +1,44 @@
 version: '3.8'
 
 services:
-  postgres_app1:
+  postgres_consult:
     image: postgres
-    container_name: postgres_app1
+    container_name: postgres_consult
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - postgres_data_app1:/var/lib/postgresql/data
+      - postgres_data_consult:/var/lib/postgresql/data
     ports:
-      - "5434:5432"
+      - "5435:5432"
     networks:
-      - network_app1
+      - network_consult
     restart: unless-stopped
 
-  pgadmin_app1:
+  pgadmin_consult:
     image: dpage/pgadmin4
-    container_name: pgadmin_app1
+    container_name: pgadmin_consult
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
     ports:
-      - "15433:80"
+      - "15434:80"
     networks:
-      - network_app1
+      - network_consult
     restart: unless-stopped
 
-  node_app1:
+  node_consult:
     build: .
-    container_name: node_app1
+    container_name: node_consult
     volumes:
       - .:/usr/app
     ports:
-      - "3333:3333"
+      - "3335:3335"
     networks:
-      - network_app1
+      - network_consult
     restart: unless-stopped
 
 networks:
-  network_app1:
+  network_consult:
 
 volumes:
-  postgres_data_app1:
+  postgres_data_consult:
