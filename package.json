@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "ts-node-dev src/server.ts",
+    "prisma:dev": "prisma generate && prisma migrate dev",
     "build": "tsc"
   },
   "devDependencies": {
@@ -30,5 +31,8 @@
     "luxon": "^3.4.4",
     "nodemon": "^3.1.1",
     "prisma": "^5.13.0"
+  },
+  "prisma": {
+    "schema": "prisma/schema.prisma"
   }
 }
