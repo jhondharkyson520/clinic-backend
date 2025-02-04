@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres_consult:
     image: postgres
@@ -30,12 +28,17 @@ services:
     build: .
     container_name: node_consult
     volumes:
-      - .:/usr/app
+      - .:/usr/src/consultbackend
     ports:
       - "3335:3335"
     networks:
       - network_consult
+    environment:
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5435/clinica?schema=public
     restart: unless-stopped
+    depends_on:
+      - postgres_consult
+    entrypoint: ["/usr/src/consultbackend/entrypoint.sh"]
 
 networks:
   network_consult:
