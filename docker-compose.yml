@@ -1,47 +1,18 @@
 services:
-  postgres_consult:
-    image: postgres
-    container_name: postgres_consult
-    environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    volumes:
-      - postgres_data_consult:/var/lib/postgresql/data
-    ports:
-      - "5435:5432"
-    networks:
-      - network_consult
-    restart: unless-stopped
-
-  pgadmin_consult:
-    image: dpage/pgadmin4
-    container_name: pgadmin_consult
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
-    ports:
-      - "15434:80"
-    networks:
-      - network_consult
-    restart: unless-stopped
-
   node_consult:
     build: .
     container_name: node_consult
-    volumes:
-      - .:/usr/src/consultbackend
     ports:
-      - "3335:3335"
+      - "4000:4000"
     networks:
-      - network_consult
+      - backend_network_core_note
+    env_file:
+      - .env
     environment:
-      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5435/clinica?schema=public
+      DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db_corelab:5432/${POSTGRES_DB}"
     restart: unless-stopped
-    depends_on:
-      - postgres_consult
-    entrypoint: ["/usr/src/consultbackend/entrypoint.sh"]
+    entrypoint: ["/usr/src/clinica/entrypoint.sh"]
 
 networks:
-  network_consult:
-
-volumes:
-  postgres_data_consult:
+  backend_network_core_note:
+    external: true

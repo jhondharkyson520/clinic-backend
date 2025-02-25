@@ -19,4 +19,4 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
         message: 'Internal server error'
     })
 });
-app.listen(3333, () => console.log('servidor online!! 3333'));
+app.listen({ port: 4000, host: '0.0.0.0' }, () => console.log('servidor online!! 4000'));
