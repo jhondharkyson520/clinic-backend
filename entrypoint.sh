@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "Aguardando o banco de dados iniciar..."
-until nc -z db_corelab 5432; do
+until nc -z db_clinic 5432; do
   sleep 2
 done
 

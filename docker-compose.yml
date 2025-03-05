@@ -1,18 +1,37 @@
 services:
+
+  db_clinic:
+      image: postgres:16.3
+      env_file:
+        - .env
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+      ports:
+        - "5432:5432"
+      networks:
+        - network_clinic
+      restart: unless-stopped
+
   node_consult:
     build: .
     container_name: node_consult
+    volumes:
+      - .:/usr/src/clinica
     ports:
       - "4000:4000"
     networks:
-      - backend_network_core_note
+      - network_clinic
     env_file:
       - .env
     environment:
-      DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db_corelab:5432/${POSTGRES_DB}"
+      DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db_clinic:5432/${POSTGRES_DB}"
     restart: unless-stopped
+    depends_on:
+      - db_clinic
     entrypoint: ["/usr/src/clinica/entrypoint.sh"]
 
 networks:
-  backend_network_core_note:
-    external: true
+  network_clinic:
+
+volumes:
+  postgres_data:
